@@ -1,0 +1,24 @@
+from PIL import Image as pil
+
+IMAGE_PATH                      = input("Image > ")
+IMAGE_FILE                      = pil.open(IMAGE_PATH)
+
+ORIGINAL_WIDTH, ORIGINAL_HEIGTH	= IMAGE_FILE.size
+IMAGE_SHORT_SIZE                = min(ORIGINAL_WIDTH, ORIGINAL_HEIGTH)
+STANDARD_SHORT_SIDE             = 720
+
+if IMAGE_SHORT_SIZE <= STANDARD_SHORT_SIDE:
+	print("- STANDARD")
+	exit()
+
+RESIZE_SCALE = STANDARD_SHORT_SIDE / IMAGE_SHORT_SIZE
+
+NEW_WIDTH  = int(ORIGINAL_WIDTH * RESIZE_SCALE)
+NEW_HEIGTH = int(ORIGINAL_HEIGTH * RESIZE_SCALE)
+
+print("- NOT STANDARD")
+print("ORIGINAL : %s %s" % (ORIGINAL_WIDTH, ORIGINAL_HEIGTH))
+print("RESIZE   : %s %s" % (NEW_WIDTH, NEW_HEIGTH))
+
+IMAGE_CONV = IMAGE_FILE.resize((NEW_WIDTH, NEW_HEIGTH), pil.LANCZOS)
+IMAGE_CONV.save("gambar.png")
